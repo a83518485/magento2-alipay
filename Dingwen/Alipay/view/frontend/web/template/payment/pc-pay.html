@@ -27,13 +27,12 @@
                 <button class="action primary checkout"
                         type="submit"
                         data-bind="
-                        click: placeOrder,
-                        attr: {title: $t('Place Order')},
-                        css: {disabled: !isPlaceOrderActionAllowed()},
+                        click: continueToPay,
+                        attr: {title: $t('Continue To Pay')},
                         enable: (getCode() == isChecked())
                         "
                         disabled>
-                    <span data-bind="i18n: 'Place Order'"></span>
+                    <span data-bind="i18n: 'Continue To Pay'"></span>
                 </button>
             </div>
         </div>
