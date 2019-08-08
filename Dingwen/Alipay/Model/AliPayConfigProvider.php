@@ -45,7 +45,7 @@ class AliPayConfigProvider implements ConfigProviderInterface
     {
         return $this->method->isAvailable() ? [
             'payment' => [
-                'pc-pay' => [
+                'continueToPayPageUrl' => [
                     ""
                 ],
             ],

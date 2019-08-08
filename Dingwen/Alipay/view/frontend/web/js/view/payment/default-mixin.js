@@ -5,17 +5,21 @@
 
 define([
     'jquery',
-    'mage/utils/wrapper'
-], function ($, wrapper) {
+    'Dingwen_Alipay/js/action/redirect-continue-to-pay'
+], function ($, redirectToPayOnAction) {
     'use strict';
 
-    return function (placeOrderAction) {
+    return function (target) {
 
-        /** Override default place order action and add agreement_ids to request */
-        return wrapper.wrap(placeOrderAction, function (originalAction, paymentData, messageContainer) {
-            agreementsAssigner(paymentData);
-
-            return originalAction(paymentData, messageContainer);
+        return target.extend({
+            afterPlaceOrder: function () {
+                if(this.getCode() === "pc-pay") {
+                    this.redirectAfterPlaceOrder = false;
+                    redirectToPayOnAction.execute();
+                } else {
+                    this.redirectAfterPlaceOrder = true;
+                }
+            }
         });
     };
 });
