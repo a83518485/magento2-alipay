@@ -6,8 +6,8 @@
 namespace Dingwen\Alipay\Model;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
-use Magento\Framework\Escaper;
 use Magento\Payment\Helper\Data as PaymentHelper;
+use Magento\Framework\UrlInterface;
 
 class AliPayConfigProvider implements ConfigProviderInterface
 {
@@ -22,20 +22,33 @@ class AliPayConfigProvider implements ConfigProviderInterface
     protected $method;
 
     /**
-     * @var Escaper
+     * @var UrlInterface
      */
-    protected $escaper;
+    protected $urlBuilder;
 
     /**
      * @param PaymentHelper $paymentHelper
-     * @param Escaper $escaper
+     * @param UrlInterface $urlBuilder
+     * @codeCoverageIgnore
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         PaymentHelper $paymentHelper,
-        Escaper $escaper
+        UrlInterface $urlBuilder
     ) {
-        $this->escaper = $escaper;
+        $this->urlBuilder = $urlBuilder;
         $this->method = $paymentHelper->getMethodInstance($this->methodCode);
+    }
+
+    /**
+     * Retrieve continue to pay page URL
+     *
+     * @return string
+     * @codeCoverageIgnore
+     */
+    public function getContinueToPayUrl()
+    {
+        return $this->urlBuilder->getUrl('checkout/onepage/continuetopay/');
     }
 
     /**
@@ -46,7 +59,7 @@ class AliPayConfigProvider implements ConfigProviderInterface
         return $this->method->isAvailable() ? [
             'payment' => [
                 'continueToPayPageUrl' => [
-                    ""
+                    $this->getContinueToPayUrl()
                 ],
             ],
         ] : [];
