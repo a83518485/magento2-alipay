@@ -6,6 +6,7 @@
 namespace Dingwen\Alipay\Controller\Onepage;
 
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
+use Omnipay\Omnipay;
 
 /**
  * Onepage checkout success controller class
@@ -19,6 +20,7 @@ class ContinueToPay extends \Magento\Checkout\Controller\Onepage implements Http
      */
     public function execute()
     {
+        $gateway = Omnipay::create('Alipay_AopPage');
         $session = $this->getOnepage()->getCheckout();
         if (!$this->_objectManager->get(\Magento\Checkout\Model\Session\SuccessValidator::class)->isValid()) {
             return $this->resultRedirectFactory->create()->setPath('checkout/cart');

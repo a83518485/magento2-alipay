@@ -6,22 +6,24 @@
 namespace DingWen\Alipay\Model;
 
 /**
- * Class Checkmo
+ * Class alipay
  *
  * @method \Magento\Quote\Api\Data\PaymentMethodExtensionInterface getExtensionAttributes()
  *
  * @api
  * @since 100.0.2
  */
-class PCPay extends \Magento\Payment\Model\Method\AbstractMethod
+class AliPay extends \Magento\Payment\Model\Method\AbstractMethod
 {
-    const PAYMENT_METHOD_CHECKMO_CODE = 'pc-pay';
+    const PAYMENT_METHOD_ALIPAY_CODE = 'alipay';
 
     /**
      * Payment method code
      *
      * @var string
      */
-    protected $_code = self::PAYMENT_METHOD_CHECKMO_CODE;
+    protected $_code = self::PAYMENT_METHOD_ALIPAY_CODE;
+
+    
 
 }

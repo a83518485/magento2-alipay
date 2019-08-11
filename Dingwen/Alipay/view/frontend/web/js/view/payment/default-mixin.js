@@ -13,7 +13,7 @@ define([
 
         return target.extend({
             afterPlaceOrder: function () {
-                if(this.getCode() === "pc-pay") {
+                if(this.getCode() === "alipay") {
                     this.redirectAfterPlaceOrder = false;
                     redirectToPayOnAction.execute();
                 } else {

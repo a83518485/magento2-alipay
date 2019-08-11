@@ -12,9 +12,9 @@ define([
 
     rendererList.push(
         {
-            type: 'pc-pay',
-            component: 'Dingwen_Alipay/js/view/payment/method-renderer/pc-pay-method'
-        },
+            type: 'alipay',
+            component: 'Dingwen_Alipay/js/view/payment/method-renderer/alipay-method'
+        }
     );
 
     /** Add view logic here if needed */

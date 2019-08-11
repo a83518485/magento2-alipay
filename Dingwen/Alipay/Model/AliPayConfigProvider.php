@@ -14,10 +14,10 @@ class AliPayConfigProvider implements ConfigProviderInterface
     /**
      * @var string[]
      */
-    protected $methodCode = PCPay::PAYMENT_METHOD_CHECKMO_CODE;
+    protected $methodCode = AliPay::PAYMENT_METHOD_ALIPAY_CODE;
 
     /**
-     * @var PCPay
+     * @var AliPay
      */
     protected $method;
 

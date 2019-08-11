@@ -4,11 +4,11 @@
     "require": {
         "magento/framework": "102.0.*",
         "php": "~7.1.3||~7.2.0",
-        "league/omnipay":"^3",
+        "php-http/zend-adapter": "^0.1.0",
+        "league/omnipay": "^3",
+        "lokielse/omnipay-unionpay": "^3.0",
         "lokielse/omnipay-alipay": "^3.0",
-        "lokielse/omnipay-unionpay": "^0.4",
-        "lokielse/omnipay-wechatpay": "^3.0",
-        "php-http/zend-adapter": "*"
+        "lokielse/omnipay-wechatpay": "^3.0"
     },
     "autoload": {
         "files": [
