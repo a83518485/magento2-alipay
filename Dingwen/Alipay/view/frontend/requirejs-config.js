@@ -8,7 +8,7 @@ var config = {
         mixins: {
             'Magento_Checkout/js/view/payment/default': {
                 'Dingwen_Alipay/js/view/payment/default-mixin': true
-            },
+            }
         }
     }
 };

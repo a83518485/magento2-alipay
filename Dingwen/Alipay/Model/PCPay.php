@@ -8,14 +8,13 @@ namespace DingWen\Alipay\Model;
 /**
  * Class alipay
  *
- * @method \Magento\Quote\Api\Data\PaymentMethodExtensionInterface getExtensionAttributes()
  *
  * @api
  * @since 100.0.2
  */
-class AliPay extends \Magento\Payment\Model\Method\AbstractMethod
+class PCPay extends \Magento\Payment\Model\Method\AbstractMethod
 {
-    const PAYMENT_METHOD_ALIPAY_CODE = 'alipay';
+    const PAYMENT_METHOD_ALIPAY_CODE = 'pc-pay';
 
     /**
      * Payment method code

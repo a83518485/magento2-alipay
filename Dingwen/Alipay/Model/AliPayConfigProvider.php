@@ -14,10 +14,10 @@ class AliPayConfigProvider implements ConfigProviderInterface
     /**
      * @var string[]
      */
-    protected $methodCode = AliPay::PAYMENT_METHOD_ALIPAY_CODE;
+    protected $methodCode = PCPAY::PAYMENT_METHOD_ALIPAY_CODE;
 
     /**
-     * @var AliPay
+     * @var PCPAY
      */
     protected $method;
 
@@ -57,11 +57,7 @@ class AliPayConfigProvider implements ConfigProviderInterface
     public function getConfig()
     {
         return $this->method->isAvailable() ? [
-            'payment' => [
-                'continueToPayPageUrl' => [
-                    $this->getContinueToPayUrl()
-                ],
-            ],
+                'continueToPayPageUrl' => $this->getContinueToPayUrl(),
         ] : [];
     }
 

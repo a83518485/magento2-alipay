@@ -14,7 +14,4 @@
             </argument>
         </arguments>
     </type>
-    <virtualType name="alipayGateway">
-
-    </virtualType>
 </config>

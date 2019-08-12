@@ -22,7 +22,7 @@ class AlipayAdapter
 
     protected $_gateway = null;
 
-    const SIGN_TYPE = "rsa2";
+    const SIGN_TYPE = "sign_type";
     const APP_ID = "app_id";
     const PRIVATE_KEY = "merchant_private_key";
     const ALIPAY_PUBLIC_KEY = "alipay_public_key";
@@ -34,6 +34,10 @@ class AlipayAdapter
     public function __construct(ConfigInterface $config)
     {
         $this->_config = $config;
+        echo "<pre>";
+        var_dump($this->_config);
+        echo "</pre>";
+        exit;
         $this->initCredentials();
 
     }
@@ -60,6 +64,9 @@ class AlipayAdapter
         $this->_gateway = $gateway;
     }
 
+    /**
+     * @return AopPageGateway
+     */
     public function getGateway()
     {
         return $this->_gateway;

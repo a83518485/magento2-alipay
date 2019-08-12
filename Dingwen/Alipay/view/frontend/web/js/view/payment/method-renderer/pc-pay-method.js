@@ -11,7 +11,7 @@ define([
 
     return Component.extend({
         defaults: {
-            template: 'Dingwen_Alipay/payment/alipay'
+            template: 'Dingwen_Alipay/payment/pc-pay'
         }
     });
 });

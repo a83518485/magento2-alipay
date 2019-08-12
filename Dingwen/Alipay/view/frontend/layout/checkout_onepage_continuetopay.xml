@@ -17,8 +17,8 @@
             </action>
         </referenceBlock>
         <referenceContainer name="content">
-            <block class="Magento\Checkout\Block\Onepage\Success" name="checkout.success" template="Dingwen_Alipay::success.phtml" cacheable="false">
-                <container name="order.success.additional.info" label="Order Success Additional Info"/>
+            <block class="Dingwen\Alipay\Block\ContinueToPay" name="alipay.continuetpay" template="Dingwen_Alipay::continuetopay.phtml"
+                   cacheable="false">
             </block>
             <block class="Magento\Checkout\Block\Registration" name="checkout.registration" template="Magento_Checkout::registration.phtml" cacheable="false"/>
         </referenceContainer>

@@ -10,7 +10,7 @@
         <payment>
             <pc-pay>
                 <active>1</active>
-                <model>Dingwen\Alipay\Model\AliPay</model>
+                <model>Dingwen\Alipay\Model\PCPay</model>
                 <order_status>pending</order_status>
                 <title>Alipay</title>
                 <allowspecific>0</allowspecific>

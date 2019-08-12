@@ -18,11 +18,10 @@
             <p><?= /* @escapeNotVerified */ __('We\'ll email you an order confirmation with details and tracking info.') ?></p>
     <?php endif;?>
 
-    <?= $block->getAdditionalInfoHtml() ?>
-
     <div class="actions-toolbar">
         <div class="primary">
-            <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getContinueUrl() ?>"><span><?= /* @escapeNotVerified */ __('Continue Shopping') ?></span></a>
+            <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getRedirectUrl() ?>"><span><?= /*
+ * @escapeNotVerified */ __('Continue To Pay') ?></span></a>
         </div>
     </div>
 </div>
