@@ -41,7 +41,7 @@ class ContinueToPay extends Success
         $request = $this->gateway->purchase();
         $request->setBizContent([
             'out_trade_no' => $order->getIncrementId(),
-            'total_amount' => 0.01,
+            'total_amount' => $order->getGrandTotal(),
             'subject'      => 'Magento2 测试订单',
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ]);
