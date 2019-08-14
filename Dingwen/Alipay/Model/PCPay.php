@@ -16,6 +16,8 @@ class PCPay extends \Magento\Payment\Model\Method\AbstractMethod
 {
     const PAYMENT_METHOD_ALIPAY_CODE = 'pc-pay';
 
+    const PAYMENT_GATEWAY_NAME_CODE = 'alipay';
+
     /**
      * Payment method code
      *

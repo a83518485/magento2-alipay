@@ -16,7 +16,16 @@
                     <frontend_model>Magento\Paypal\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
                     <attribute type="activity_path">payment/alipay/active</attribute>
                     <attribute type="displayIn">recommended_solutions</attribute>
-                    <group id="credentials" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable AliPay</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/alipay/active</config_path>
+                        <requires>
+                            <group id="alipay_credentials"/>
+                        </requires>
+                    </field>
+                    <group id="alipay_credentials" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                           showInStore="1">
                         <label>Credentials</label>
                         <field id="app_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>App Id</label>
@@ -53,14 +62,9 @@
                             <frontend_model>Amazon\Core\Block\Adminhtml\Form\Field\IpnUrl</frontend_model>
                         </field>-->
                     </group>
-                    <group id="options" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <!--<group id="options" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Options</label>
-                        <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <label>Enable AliPay</label>
-                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>payment/alipay/active</config_path>
-                        </field>
-                    </group>
+                    </group>-->
                 </group>
             </group>
         </section>

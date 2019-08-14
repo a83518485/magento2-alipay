@@ -34,10 +34,6 @@ class AlipayAdapter
     public function __construct(ConfigInterface $config)
     {
         $this->_config = $config;
-        echo "<pre>";
-        var_dump($this->_config);
-        echo "</pre>";
-        exit;
         $this->initCredentials();
 
     }

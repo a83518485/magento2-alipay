@@ -30,10 +30,6 @@ class ContinueToPay extends Success
         array $data = []
     ) {
         parent::__construct($context, $checkoutSession, $orderConfig, $httpContext, $data);
-        /*echo "<pre>";
-        print_r(213123);
-        echo "</pre>";
-        exit;*/
         $this->gateway = $alipayAdapterFactory->create()->getGateway();
     }
 
