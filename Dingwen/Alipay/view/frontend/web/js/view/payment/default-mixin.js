@@ -4,9 +4,8 @@
  */
 
 define([
-    'jquery',
     'Dingwen_Alipay/js/action/redirect-continue-to-pay'
-], function ($, redirectToPayOnAction) {
+], function (redirectContinueToPayOnAction) {
     'use strict';
 
     return function (target) {
@@ -15,7 +14,7 @@ define([
             afterPlaceOrder: function () {
                 if(this.getCode() === "pc-pay") {
                     this.redirectAfterPlaceOrder = false;
-                    redirectToPayOnAction.execute();
+                    redirectContinueToPayOnAction.execute();
                 } else {
                     this.redirectAfterPlaceOrder = true;
                 }

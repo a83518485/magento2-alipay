@@ -4,6 +4,19 @@
  */
 
 var config = {
+    // map: {
+    //     '*': {
+    //         'paymentConfirm' :  'Dingwen_Alipay/js/view/payment-confirm.js'
+    //     }
+    // },
+    shim: {
+        'Dingwen_Alipay/layer/layer': {
+            exports: 'layer',
+            deps: [
+                'jquery'
+            ]
+        }
+    },
     config: {
         mixins: {
             'Magento_Checkout/js/view/payment/default': {
