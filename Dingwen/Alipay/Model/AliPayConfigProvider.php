@@ -48,7 +48,7 @@ class AliPayConfigProvider implements ConfigProviderInterface
      */
     public function getContinueToPayUrl()
     {
-        return $this->urlBuilder->getUrl('checkout/onepage/continuetopay/');
+        return $this->urlBuilder->getUrl('alipay/index/continuetopay/');
     }
 
     /**

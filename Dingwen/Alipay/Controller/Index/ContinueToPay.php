@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Dingwen\Alipay\Controller\Onepage;
+namespace Dingwen\Alipay\Controller\Index;
 
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
 

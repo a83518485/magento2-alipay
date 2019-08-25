@@ -9,6 +9,7 @@
     <head>
         <title>Continue To Pay</title>
         <css src="Dingwen_Alipay/layer/theme/default/layer.css"/>
+        <css src="Dingwen_Alipay/css/layer-custom.css"/>
     </head>
     <body>
         <referenceBlock name="page.main.title">

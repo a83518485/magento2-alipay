@@ -17,4 +17,9 @@
             <argument name="config" xsi:type="object">AlipayGatewayConfig</argument>
         </arguments>
     </type>
+    <type name="Dingwen\Alipay\Controller\AbstractAction">
+        <arguments>
+            <argument name="config" xsi:type="object">AlipayGatewayConfig</argument>
+        </arguments>
+    </type>
 </config>
