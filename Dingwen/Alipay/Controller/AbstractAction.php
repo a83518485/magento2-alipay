@@ -38,8 +38,8 @@ abstract class AbstractAction extends Action
      */
     public function __construct(
         Context $context,
-        ConfigInterface $config,
-        Session $checkoutSession
+        Session $checkoutSession,
+        ConfigInterface $config = null
     ) {
         parent::__construct($context);
         $this->config = $config;
