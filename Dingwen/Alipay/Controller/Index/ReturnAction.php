@@ -19,6 +19,7 @@ use Magento\Checkout\Helper\Data;
 use Magento\Customer\Model\Group;
 use Magento\Quote\Api\CartManagementInterface;
 use Dingwen\Alipay\Model\OrderCancellationService;
+use Dingwen\Alipay\Model\Adapter\AlipayAdapterFactory;
 
 /**
  * Class PlaceOrder
@@ -53,6 +54,11 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface
     private $orderCancellationService;
 
     /**
+     * @var AlipayAdapterFactory
+     */
+    private $alipayAdapterFactory;
+
+    /**
      * Constructor
      *
      * @param Context $context
@@ -66,7 +72,8 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface
         \Magento\Customer\Model\Session $customerSession,
         Data $checkoutHelper,
         CartManagementInterface $cartManagement,
-        orderCancellationService $orderCancellationService
+        orderCancellationService $orderCancellationService,
+        AlipayAdapterFactory $alipayAdapterFactory
     ) {
         parent::__construct($context, $checkoutSession);
         $this->customerSession = $customerSession;
@@ -74,6 +81,7 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface
         $this->checkoutHelper = $checkoutHelper;
         $this->cartManagement = $cartManagement;
         $this->orderCancellationService = $orderCancellationService;
+        $this->alipayAdapterFactory = $alipayAdapterFactory;
     }
 
     /**
@@ -85,6 +93,19 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $quote = $this->checkoutSession->getQuote();
+
+        $gateway = $this->alipayAdapterFactory->create()->getGateway();
+
+        $params = array_merge($_POST, $_GET);
+        $request = $gateway->query();
+        $request->setBizContent([
+            'trade_no'=>$params['trade_no'] ?? null,
+        ]);
+        $response = $request->send();
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        exit;
 
         try {
             $this->validateQuote($quote);

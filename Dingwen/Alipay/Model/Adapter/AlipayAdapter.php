@@ -12,6 +12,8 @@ namespace Dingwen\Alipay\Model\Adapter;
 use Omnipay\Omnipay;
 use Omnipay\Alipay\AopPageGateway;
 use Magento\Payment\Gateway\ConfigInterface;
+use Magento\Framework\UrlInterface;
+
 
 class AlipayAdapter
 {
@@ -19,6 +21,11 @@ class AlipayAdapter
      * @var ConfigInterface
      */
     protected $_config;
+
+    /**
+     * @var UrlInterface
+     */
+    protected $_url;
 
     protected $_gateway = null;
 
@@ -31,9 +38,10 @@ class AlipayAdapter
     const NOTIFY_URL = "";
 
 
-    public function __construct(ConfigInterface $config)
+    public function __construct(ConfigInterface $config,UrlInterface $url)
     {
         $this->_config = $config;
+        $this->_url = $url;
         $this->initCredentials();
 
     }
@@ -48,8 +56,8 @@ class AlipayAdapter
         $gateway->setAppId($this->_config->getValue(self::APP_ID));
         $gateway->setPrivateKey($this->_config->getValue(self::PRIVATE_KEY));
         $gateway->setAlipayPublicKey($this->_config->getValue(self::ALIPAY_PUBLIC_KEY));
-        $gateway->setReturnUrl($this->_config->getValue(self::RETURN_URL));
-        $gateway->setNotifyUrl($this->_config->getValue(self::NOTIFY_URL));
+        $gateway->setReturnUrl($this->_url->getUrl('alipay/index/return'));
+        //$gateway->setNotifyUrl('');
 
         if ($this->_config->getValue(self::SANDBOX)) {
             $gateway->sandbox();
