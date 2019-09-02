@@ -20,11 +20,13 @@ use Magento\Customer\Model\Group;
 use Magento\Quote\Api\CartManagementInterface;
 use Dingwen\Alipay\Model\OrderCancellationService;
 use Dingwen\Alipay\Model\Adapter\AlipayAdapterFactory;
+use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
+use Dingwen\Alipay\Model\AlipayGatewayConfig;
 
 /**
  * Class PlaceOrder
  */
-class ReturnAction extends AbstractAction implements HttpPostActionInterface
+class ReturnAction extends AbstractAction implements HttpPostActionInterface,HttpGetActionInterface
 {
     /**
      * @var CartManagementInterface
@@ -73,9 +75,10 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface
         Data $checkoutHelper,
         CartManagementInterface $cartManagement,
         orderCancellationService $orderCancellationService,
-        AlipayAdapterFactory $alipayAdapterFactory
+        AlipayAdapterFactory $alipayAdapterFactory,
+        AlipayGatewayConfig $config
     ) {
-        parent::__construct($context, $checkoutSession);
+        parent::__construct($context, $checkoutSession, $config);
         $this->customerSession = $customerSession;
         $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
         $this->checkoutHelper = $checkoutHelper;
@@ -93,7 +96,10 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $quote = $this->checkoutSession->getQuote();
-
+        echo "<pre>";
+        var_dump($quote);
+        echo "</pre>";
+        exit;
         $gateway = $this->alipayAdapterFactory->create()->getGateway();
 
         $params = array_merge($_POST, $_GET);
@@ -102,10 +108,9 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface
             'trade_no'=>$params['trade_no'] ?? null,
         ]);
         $response = $request->send();
-        echo "<pre>";
-        print_r($response);
-        echo "</pre>";
-        exit;
+        $paymentInfo = ($response->getData())['alipay_trade_query_response'];
+
+        $quote->getPayment()->setAdditionalInformation($paymentInfo);
 
         try {
             $this->validateQuote($quote);

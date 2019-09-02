@@ -11,14 +11,14 @@ namespace Dingwen\Alipay\Model\Adapter;
 
 use Omnipay\Omnipay;
 use Omnipay\Alipay\AopPageGateway;
-use Magento\Payment\Gateway\ConfigInterface;
+use Dingwen\Alipay\Model\AlipayGatewayConfig;
 use Magento\Framework\UrlInterface;
 
 
 class AlipayAdapter
 {
     /**
-     * @var ConfigInterface
+     * @var AlipayGatewayConfig
      */
     protected $_config;
 
@@ -38,7 +38,7 @@ class AlipayAdapter
     const NOTIFY_URL = "";
 
 
-    public function __construct(ConfigInterface $config,UrlInterface $url)
+    public function __construct(AlipayGatewayConfig $config,UrlInterface $url)
     {
         $this->_config = $config;
         $this->_url = $url;

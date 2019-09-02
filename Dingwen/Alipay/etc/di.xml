@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <virtualType name="AlipayGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
+    <!--<virtualType name="AlipayGatewayConfig" type="Magento\Payment\Gateway\Config\Config">
         <arguments>
             <argument name="methodCode" xsi:type="const">DingWen\Alipay\Model\PCPay::PAYMENT_GATEWAY_NAME_CODE</argument>
         </arguments>
@@ -20,6 +20,12 @@
     <type name="Dingwen\Alipay\Controller\AbstractAction">
         <arguments>
             <argument name="config" xsi:type="object">AlipayGatewayConfig</argument>
+        </arguments>
+    </type>-->
+
+    <type name="Dingwen\Alipay\Model\AlipayGatewayConfig">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">DingWen\Alipay\Model\PCPay::PAYMENT_GATEWAY_NAME_CODE</argument>
         </arguments>
     </type>
 </config>
