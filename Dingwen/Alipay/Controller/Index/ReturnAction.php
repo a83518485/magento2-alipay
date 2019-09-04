@@ -22,6 +22,7 @@ use Dingwen\Alipay\Model\OrderCancellationService;
 use Dingwen\Alipay\Model\Adapter\AlipayAdapterFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
 use Dingwen\Alipay\Model\AlipayGatewayConfig;
+use Omnipay\Alipay\Responses\AopTradeQueryResponse;
 
 /**
  * Class PlaceOrder
@@ -95,27 +96,30 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface,Htt
     public function execute()
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        $quote = $this->checkoutSession->getQuote();
-        echo "<pre>";
-        var_dump($quote);
-        echo "</pre>";
-        exit;
+        $order = $this->checkoutSession->getLastRealOrder();
         $gateway = $this->alipayAdapterFactory->create()->getGateway();
 
-        $params = array_merge($_POST, $_GET);
-        $request = $gateway->query();
-        $request->setBizContent([
-            'trade_no'=>$params['trade_no'] ?? null,
-        ]);
-        $response = $request->send();
-        $paymentInfo = ($response->getData())['alipay_trade_query_response'];
-
-        $quote->getPayment()->setAdditionalInformation($paymentInfo);
-
         try {
-            $this->validateQuote($quote);
 
-            $this->_orderPlace($quote);
+            $params = array_merge($_POST, $_GET);
+            $request = $gateway->query();
+            $request->setBizContent([
+                'trade_no'=>$params['trade_no'] ?? null,
+            ]);
+            /**@var $response AopTradeQueryResponse */
+            $response = $request->send();
+
+            $order->getPayment()->setAdditionalInformation(array_merge(
+                $order->getPayment()->getAdditionalInformation(),
+                $response->getAlipayResponse()
+            ));
+
+            if ($response->isPaid()) {
+                $order->setIsInProcess(true);
+                $order->save();
+            }
+
+            //$this->_orderPlace($quote);
 
             /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
             return $resultRedirect->setPath('checkout/onepage/success', ['_secure' => true]);
@@ -123,7 +127,7 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface,Htt
             $this->logger->critical($e);
             $this->messageManager->addExceptionMessage(
                 $e,
-                'The order #' . $quote->getReservedOrderId() . ' cannot be processed.'
+                'The order #' . $order->getIncrementId() . ' cannot be processed.'
             );
         }
 

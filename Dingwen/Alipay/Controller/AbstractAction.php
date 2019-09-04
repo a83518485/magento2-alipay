@@ -66,16 +66,4 @@ abstract class AbstractAction extends Action
 
         return parent::dispatch($request);
     }
-
-    /**
-     * @param CartInterface $quote
-     * @return void
-     * @throws \InvalidArgumentException
-     */
-    protected function validateQuote($quote)
-    {
-        if (!$quote || !$quote->getItemsCount()) {
-            throw new \InvalidArgumentException(__('Checkout failed to initialize. Verify and try again.'));
-        }
-    }
 }
