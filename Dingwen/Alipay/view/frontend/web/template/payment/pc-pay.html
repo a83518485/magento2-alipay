@@ -27,7 +27,7 @@
                 <button class="action primary checkout"
                         type="submit"
                         data-bind="
-                        click: placeOrder,
+                        click: redirectToCheckoutRedirectUrl,
                         attr: {title: $t('Continue To Pay')},
                         enable: (getCode() == isChecked())
                         "

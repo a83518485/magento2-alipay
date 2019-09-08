@@ -9,7 +9,6 @@ namespace Dingwen\Alipay\Controller;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Quote\Api\Data\CartInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Payment\Gateway\ConfigInterface;
