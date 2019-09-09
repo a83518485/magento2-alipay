@@ -6,7 +6,7 @@
 /* @api */
 define([
     'Magento_Checkout/js/view/payment/default',
-    'Dingwen_Alipay/js/action/redirect-alipay-page-pay-url'
+    'Dingwen_Alipay/js/action/redirect-checkout-redirect-url'
 ], function (Component, redirectCheckoutRedirectUrlOnAction) {
     'use strict';
 
@@ -14,8 +14,8 @@ define([
         defaults: {
             template: 'Dingwen_Alipay/payment/pc-pay'
         },
-
-        redirectToCheckoutRedirectUrl: function () {
+        afterPlaceOrder: function () {
+            this.redirectAfterPlaceOrder = false;
             redirectCheckoutRedirectUrlOnAction.execute();
         }
     });

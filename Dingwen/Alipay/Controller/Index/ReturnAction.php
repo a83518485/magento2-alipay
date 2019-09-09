@@ -96,7 +96,7 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface,Htt
     public function execute()
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        $quote = $this->checkoutSession->getQuote();
+        $order = $this->checkoutSession->getLastRealOrder();
         $gateway = $this->alipayAdapterFactory->create()->getGateway();
         try {
 
@@ -108,13 +108,14 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface,Htt
             /**@var $response AopTradeQueryResponse */
             $response = $request->send();
 
-            $quote->getPayment()->setAdditionalInformation(array_merge(
-                $quote->getPayment()->getAdditionalInformation(),
+            $order->getPayment()->setAdditionalInformation(array_merge(
+                $order->getPayment()->getAdditionalInformation(),
                 $response->getAlipayResponse()
             ));
 
             if ($response->isPaid()) {
-                $this->_orderPlace($quote);
+                $order->setIsInProcess(true);
+                $order->save();
             }
 
             /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
@@ -123,7 +124,7 @@ class ReturnAction extends AbstractAction implements HttpPostActionInterface,Htt
             $this->logger->critical($e);
             $this->messageManager->addExceptionMessage(
                 $e,
-                'The order #' . $quote->getReservedOrderId() . ' cannot be processed.'
+                'The order #' . $order->getIncrementId() . ' cannot be processed.'
             );
         }
 

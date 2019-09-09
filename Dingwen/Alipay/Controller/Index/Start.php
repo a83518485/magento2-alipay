@@ -9,21 +9,15 @@ use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 use Dingwen\Alipay\Controller\AbstractAction;
-use Magento\Checkout\Model\Type\Onepage;
-use Magento\Quote\Model\Quote;
 use Magento\Checkout\Helper\Data;
-use Magento\Customer\Model\Group;
 use Magento\Quote\Api\CartManagementInterface;
 use Dingwen\Alipay\Model\OrderCancellationService;
 use Dingwen\Alipay\Model\Adapter\AlipayAdapterFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
 use Dingwen\Alipay\Model\AlipayGatewayConfig;
-use Omnipay\Alipay\Responses\AopTradeQueryResponse;
-use Omnipay\Alipay\Requests\AopTradePagePayRequest;
 use Omnipay\Alipay\Responses\AopTradePagePayResponse;
 
 /**
@@ -106,26 +100,11 @@ class Start extends AbstractAction implements HttpPostActionInterface,HttpGetAct
     {
         $alipayAdapter = $this->alipayAdapterFactory->create();
         $request = $alipayAdapter->getGateway()->purchase();
-        $quote   = $this->checkoutSession->getQuote();
+        $order   = $this->checkoutSession->getLastRealOrder();
 
-        if (!$quote->hasItems() || $quote->getHasError()) {
-            $this->getResponse()->setStatusHeader(403, '1.1', 'Forbidden');
-            throw new \Magento\Framework\Exception\LocalizedException(__('We can\'t initialize Alipay Checkout.'));
-        }
-        if (!(float)$quote->getGrandTotal()) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __(
-                    'Alipay can\'t process orders with a zero balance due. '
-                    . 'To finish your purchase, please go through the standard checkout process.'
-                )
-            );
-        }
-
-        $quote->reserveOrderId();
-        $this->quoteRepository->save($quote);
         $request->setBizContent([
-            'out_trade_no' => $quote->getReservedOrderId(),
-            'total_amount' => round($quote->getBaseGrandTotal(), 2),
+            'out_trade_no' => $order->getIncrementId(),
+            'total_amount' => round($order->getBaseGrandTotal(), 2),
             'subject' => 'Magento2 测试订单',
             'product_code' => 'FAST_INSTANT_TRADE_PAY',
         ]);
